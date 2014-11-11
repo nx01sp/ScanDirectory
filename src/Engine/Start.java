@@ -2,6 +2,7 @@ package Engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.app.daemon.ListenerDirectory;
 import it.app.datalayer.tables.daos.ParameterDao;
 import it.app.datalayer.tables.pojos.Parameter;
 
@@ -15,12 +16,18 @@ public class Start {
 //	public static ListenerDirectory listener;
 
 	public static void main(String[] args) {
-		
+
+		ApplicationContext context=null;
 		//listener.startListener("/home/sergiop/Downloads/","/home/sergiop/Downloads/Dump/");
 		try{
-		      ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		      context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		}catch(Exception e){
 			System.out.println(e.getLocalizedMessage());
+		}
+		
+		ListenerDirectory ls = context.getBean("listener", ListenerDirectory.class);
+		if(ls!=null){
+			System.out.println(ls.toString());
 		}
 	      
 	      /*ParameterDao dao = new ParameterDao();
