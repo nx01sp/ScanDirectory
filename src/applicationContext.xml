@@ -12,8 +12,6 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
-	<context:annotation-config />
-
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
        <property name="url" value="jdbc:mysql://localhost:3306/scandirectory" />
        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -71,6 +69,7 @@
     </bean>
     
     <!-- BEAN DEFINITION -->
+    <bean id="sqlcontroller" class="it.app.controller.SqlController"/>
     <bean id="listener" class="it.app.daemon.ListenerDirectory"/>
     
     
