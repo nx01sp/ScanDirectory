@@ -11,7 +11,9 @@ import java.nio.file.WatchEvent.Kind;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
+import org.springframework.stereotype.Component;
 
+@Component
 public class ListenerDirectory{
 
 	private WatchService watcher;
