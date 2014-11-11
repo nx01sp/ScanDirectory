@@ -18,14 +18,17 @@ public class ListenerDirectory{
 	private Kind<Path> ENTRY_MODIFY = java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 	private Kind<Object> OVERFLOW = java.nio.file.StandardWatchEventKinds.OVERFLOW;
 	
+	private FileController fileController;
+	
 	public ListenerDirectory() {
+		fileController = new FileController();
 	}
 	
-	public void startListener(String path)
+	public void startListener(String pathSrc, String pathDst)
 	{
 		try {
 			watcher = FileSystems.getDefault().newWatchService();
-			Path dir = Paths.get(path);
+			Path dir = Paths.get(pathSrc);
             dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
     		while (true) {
     		    WatchKey key;
@@ -51,6 +54,11 @@ public class ListenerDirectory{
     		        } else if (kind == ENTRY_CREATE) {
     		 
     			        System.out.println(kind.name() + ": " + fileName);
+    			        if(fileController.validateFile(fileName.toFile())){
+    			        	
+    			        	fileController.moveFile(fileName, dir, pathDst);
+    			        	
+    			        }
     		 
     		        } else if (kind == ENTRY_DELETE) {
     		 
@@ -71,6 +79,8 @@ public class ListenerDirectory{
     		}
 		} catch (IOException e) {
 			System.out.println("Errore Server Interno");
+		} catch (Exception e){
+			System.out.println(e.getLocalizedMessage());
 		}
 		
 
